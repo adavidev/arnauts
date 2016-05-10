@@ -5,7 +5,7 @@ package com.mygdx.game.ship;
  */
 public class Hull extends Tile {
     public Hull(){
-        TileRenderObject ro = new HullRenderObject(this);
+        HullRenderObject ro = new HullRenderObject(this);
         type = TileType.Hull;
     }
 }

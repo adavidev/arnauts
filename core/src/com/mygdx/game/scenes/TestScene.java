@@ -6,6 +6,7 @@ import com.mygdx.game.characters.Engineer;
 import com.mygdx.game.core.GameNode;
 import com.mygdx.game.core.NodeHolder;
 import com.mygdx.game.core.Scene;
+import com.mygdx.game.ship.Corridor;
 import com.mygdx.game.ship.Ship;
 import com.mygdx.game.ship.Tile;
 
@@ -51,13 +52,13 @@ public class TestScene extends Scene{
             }
         };
         ship = new Ship();
-        ship.addTile(new Tile(), 2, 2);
-        ship.addTile(new Tile(), 4, 2);
-        ship.addTile(new Tile(), 3, 2);
-        ship.addTile(new Tile(), 1, 2);
-        ship.addTile(new Tile(), 1, 1);
-        ship.addTile(new Tile(), 3, 1);
-        ship.addTile(new Tile(), 2, 1);
+        ship.addTile(new Corridor(), 2, 2);
+        ship.addTile(new Corridor(), 4, 2);
+        ship.addTile(new Corridor(), 3, 2);
+        ship.addTile(new Corridor(), 1, 2);
+        ship.addTile(new Corridor(), 1, 1);
+        ship.addTile(new Corridor(), 3, 1);
+        ship.addTile(new Corridor(), 2, 1);
         ship.pos.add(-100,-100,0);
 
         e.pos.add(25,50,0);

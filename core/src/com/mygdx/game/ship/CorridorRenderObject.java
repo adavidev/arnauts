@@ -10,9 +10,9 @@ import com.mygdx.game.core.RenderObject;
 /**
  * Created by al on 4/7/2016.
  */
-public class TileRenderObject{
+public class CorridorRenderObject {
 
-    public TileRenderObject(GameNode node) {
+    public CorridorRenderObject(GameNode node) {
 
         Background bg = new Background(node);
         MiddleGround mg = new MiddleGround(node);

@@ -10,9 +10,8 @@ import com.mygdx.game.core.RenderObject;
 /**
  * Created by Alan on 4/18/2016.
  */
-public class HullRenderObject extends TileRenderObject {
+public class HullRenderObject {
     public HullRenderObject(GameNode node) {
-        super(node);
 
         Background bg = new Background(node);
         MiddleGround mg = new MiddleGround(node);
