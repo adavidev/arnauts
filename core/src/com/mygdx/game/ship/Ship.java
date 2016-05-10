@@ -35,10 +35,7 @@ public class Ship extends NodeHolder {
         tile.pos.x = x * tile.width;
         tile.pos.y = y * tile.height;
 
-        if (shipTiles.get(x + 1,y) == null && shipTiles.get(x,y).type != TileType.Hull){
-            tile.type = TileType.WallR;
-            addTile(new Hull(), x+1, y);
-        }
+        tile.check(this);
     }
 
 }
