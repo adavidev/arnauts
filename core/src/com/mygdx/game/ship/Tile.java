@@ -12,4 +12,7 @@ public abstract class Tile extends GameNode {
     public int y;
     public TileType type = TileType.None;
 
+    public void check(Ship ship) {
+
+    }
 }
