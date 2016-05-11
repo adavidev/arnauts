@@ -14,14 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by Alan on 3/29/2016.
  */
-public class EngineerRenderObject extends RenderObject {
-
-    private final Array<TextureRegion> standreg;
-    TextureRegion tr;
-    Array<TextureRegion> runTrs;
-    Animation right, left, stand, wleft, wright;
-    float stateTime;
-
+public class EngineerRenderObject extends CharacterRenderObject {
     public EngineerRenderObject(GameNode node) {
         super(node, "EngiDude.png");
         runTrs = new Array<TextureRegion>();
@@ -56,33 +49,5 @@ public class EngineerRenderObject extends RenderObject {
         stand = new Animation(0.1f, standreg, Animation.PlayMode.LOOP);
     }
 
-    @Override
-    public void draw(SpriteBatch batch) {
-        Animation play = stand;
 
-        if (myNode.state.getClass().equals(Stand.class))
-        {
-            play = stand;
-        }
-        if ( myNode.state.getClass().equals(RunningLeft.class))
-        {
-            play = left;
-        }
-        if ( myNode.state.getClass().equals(RunningRight.class))
-        {
-            play = right;
-        }
-        if ( myNode.state.getClass().equals(WalkingLeft.class))
-        {
-            play = wleft;
-        }
-        if ( myNode.state.getClass().equals(WalkingRight.class))
-        {
-            play = wright;
-        }
-
-
-        stateTime += Gdx.graphics.getDeltaTime();
-        batch.draw(play.getKeyFrame(stateTime, true), 0,0);
-    }
 }
