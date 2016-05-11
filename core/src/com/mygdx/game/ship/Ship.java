@@ -38,4 +38,13 @@ public class Ship extends NodeHolder {
         tile.check(this);
     }
 
+    public Tile get(int x, int y){
+        Tile tile = shipTiles.get(x,y);
+        if(tile == null){
+            tile = new Space();
+        }
+
+        return tile;
+    }
+
 }

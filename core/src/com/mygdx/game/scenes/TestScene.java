@@ -7,6 +7,7 @@ import com.mygdx.game.core.GameNode;
 import com.mygdx.game.core.NodeHolder;
 import com.mygdx.game.core.Scene;
 import com.mygdx.game.ship.Corridor;
+import com.mygdx.game.ship.Hull;
 import com.mygdx.game.ship.Ship;
 import com.mygdx.game.ship.Tile;
 
@@ -55,10 +56,14 @@ public class TestScene extends Scene{
         ship.addTile(new Corridor(), 2, 2);
         ship.addTile(new Corridor(), 4, 2);
         ship.addTile(new Corridor(), 3, 2);
-        ship.addTile(new Corridor(), 1, 2);
+//        ship.addTile(new Corridor(), 1, 2);
         ship.addTile(new Corridor(), 1, 1);
         ship.addTile(new Corridor(), 3, 1);
         ship.addTile(new Corridor(), 2, 1);
+        ship.addTile(new Hull(), 1, 2);
+        ship.addTile(new Hull(), 5, 2);
+        ship.addTile(new Hull(), 2, 3);
+        ship.addTile(new Hull(), 4, 1);
         ship.pos.add(-100,-100,0);
 
         e.pos.add(25,50,0);
