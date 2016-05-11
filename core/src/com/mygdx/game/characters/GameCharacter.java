@@ -7,6 +7,7 @@ import com.mygdx.game.core.GameNode;
  */
 public abstract class GameCharacter extends GameNode {
     public int walkSpeed, climbSpeed;
+    public AI ai;
 
     public GameCharacter()
     {
