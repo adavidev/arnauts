@@ -17,10 +17,11 @@ public class HullRenderObject {
         Hull h = new Hull(node);
         RenderManager.sort();
     }
+
     public class Hull extends RenderObject {
 
-        private final Texture hullb, hullempty, hulll, hullr, hullt;
-        private final TextureRegion trhullb, trhullempty, trhulll, trhullr, trhullt;
+        private Texture hullb, hullempty, hulll, hullr, hullt, hullbl, hullbr, hulltl, hulltr;
+        private TextureRegion trhullb, trhullempty, trhulll, trhullr, trhullt, trhullbl, trhullbr, trhulltl, trhulltr;
 
         public Hull(GameNode node) {
             super(node, "hullB.png");
@@ -29,69 +30,54 @@ public class HullRenderObject {
             hulll = new Texture("hullL.png");
             hullr = new Texture("hullR.png");
             hullt = new Texture("hullT.png");
+            hullbl = new Texture("hullBL.png");
+            hullbr = new Texture("hullBR.png");
+            hulltl = new Texture("hullTL.png");
+            hulltr = new Texture("hullTR.png");
 
             trhullb = new TextureRegion(hullb);
             trhullempty = new TextureRegion(hullempty);
             trhulll = new TextureRegion(hulll);
             trhullr = new TextureRegion(hullr);
             trhullt = new TextureRegion(hullt);
+            trhullbl = new TextureRegion(hullbl);
+            trhullbr = new TextureRegion(hullbr);
+            trhulltl = new TextureRegion(hulltl);
+            trhulltr = new TextureRegion(hulltr);
         }
 
         @Override
         public void draw(SpriteBatch batch) {
-            Ship s = (Ship)myNode.parent;
+            Ship s = (Ship) myNode.parent;
             Texture tr;
-            if(s.get(((Tile)myNode).x + 1, (((Tile)myNode).y)).type == TileType.Corridor) {
-                batch.draw(trhulll, myNode.globalPos.x,myNode.globalPos.y, 0,0,25,50,1,1,myNode.globalRot);
+            if (s.get(((Tile) myNode).x + 1, (((Tile) myNode).y)).type == TileType.Corridor) {
+                batch.draw(trhulll, myNode.globalPos.x, myNode.globalPos.y, 0, 0, 25, 50, 1, 1, myNode.globalRot);
             }
-            if(s.get(((Tile)myNode).x - 1, ((Tile)myNode).y).type == TileType.Corridor) {
-                batch.draw(trhullr, myNode.globalPos.x,myNode.globalPos.y, 0,0,25,50,1,1,myNode.globalRot);
+            if (s.get(((Tile) myNode).x - 1, ((Tile) myNode).y).type == TileType.Corridor) {
+                batch.draw(trhullr, myNode.globalPos.x, myNode.globalPos.y, 0, 0, 25, 50, 1, 1, myNode.globalRot);
             }
-            if(s.get(((Tile)myNode).x, (((Tile)myNode).y + 1)).type == TileType.Corridor) {
-                batch.draw(trhullb, myNode.globalPos.x,myNode.globalPos.y, 0,0,25,50,1,1,myNode.globalRot);
+            if (s.get(((Tile) myNode).x, (((Tile) myNode).y + 1)).type == TileType.Corridor) {
+                batch.draw(trhullb, myNode.globalPos.x, myNode.globalPos.y, 0, 0, 25, 50, 1, 1, myNode.globalRot);
             }
-            if(s.get(((Tile)myNode).x, (((Tile)myNode).y - 1)).type == TileType.Corridor) {
-                batch.draw(trhullt, myNode.globalPos.x,myNode.globalPos.y, 0,0,25,50,1,1,myNode.globalRot);
+            if (s.get(((Tile) myNode).x, (((Tile) myNode).y - 1)).type == TileType.Corridor) {
+                batch.draw(trhullt, myNode.globalPos.x, myNode.globalPos.y, 0, 0, 25, 50, 1, 1, myNode.globalRot);
             }
-//            if(s.shipTiles.get(((Tile)myNode).x + 1, (((Tile)myNode).y)).type == TileType.Corridor) {
-//                batch.draw(trhulll, myNode.globalPos.x,myNode.globalPos.y, 0,0,25,50,1,1,myNode.globalRot);
-//            }
-//                batch.draw(tr, myNode.globalPos.x,myNode.globalPos.y, 0,0,25,50,1,1,myNode.globalRot);
+            if (s.get(((Tile) myNode).x + 1, (((Tile) myNode).y - 1)).type == TileType.Hull &&
+                    s.get(((Tile) myNode).x, (((Tile) myNode).y - 1)).type == TileType.None) {
+                batch.draw(trhullbl, myNode.globalPos.x, myNode.globalPos.y - 50, 0, 0, 25, 50, 1, 1, myNode.globalRot);
+            }
+            if (s.get(((Tile) myNode).x - 1, (((Tile) myNode).y - 1)).type == TileType.Hull &&
+                    s.get(((Tile) myNode).x, (((Tile) myNode).y - 1)).type == TileType.None) {
+                batch.draw(trhullbr, myNode.globalPos.x, myNode.globalPos.y - 50, 0, 0, 25, 50, 1, 1, myNode.globalRot);
+            }
+            if (s.get(((Tile) myNode).x + 1, (((Tile) myNode).y + 1)).type == TileType.Hull &&
+                    s.get(((Tile) myNode).x, (((Tile) myNode).y + 1)).type == TileType.None) {
+                batch.draw(trhulltl, myNode.globalPos.x, myNode.globalPos.y + 50, 0, 0, 25, 50, 1, 1, myNode.globalRot);
+            }
+            if (s.get(((Tile) myNode).x - 1, (((Tile) myNode).y + 1)).type == TileType.Hull &&
+                    s.get(((Tile) myNode).x, (((Tile) myNode).y + 1)).type == TileType.None) {
+                batch.draw(trhulltr, myNode.globalPos.x, myNode.globalPos.y + 50, 0, 0, 25, 50, 1, 1, myNode.globalRot);
+            }
         }
     }
-//    class Background extends RenderObject {
-//        TextureRegion tr;
-//        float stateTime;
-//
-//        public Background(GameNode node) {
-//            super(node, "hullR.png");
-//            this.zIndex = 5;
-//            tr = new TextureRegion(this, 0,0,25,50);
-//        }
-//
-//        @Override
-//        public void draw(SpriteBatch batch) {
-//            stateTime += Gdx.graphics.getDeltaTime();
-//    //            batch.draw(tr, myNode.globalPos.x,myNode.globalPos.y);
-//            batch.draw(tr, myNode.globalPos.x,myNode.globalPos.y, 0,0,25,50,1,1,myNode.globalRot);
-//        }
-//    }
-//
-//    class MiddleGround extends RenderObject {
-//        TextureRegion tr;
-//        float stateTime;
-//
-//        public MiddleGround(GameNode node) {
-//            super(node, "hullR.png");
-//            this.zIndex = 6;
-//            tr = new TextureRegion(this, 0,0,25,50);
-//        }
-//
-//        @Override
-//        public void draw(SpriteBatch batch) {
-//            stateTime += Gdx.graphics.getDeltaTime();
-//            batch.draw(tr, myNode.globalPos.x,myNode.globalPos.y, 0,0,25,50,1,1,myNode.globalRot);
-//    //            batch.draw(tr, myNode.globalPos.x,myNode.globalPos.y);
-//        }
-//    }
 }
