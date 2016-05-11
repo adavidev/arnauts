@@ -12,14 +12,7 @@ import com.mygdx.game.core.RenderObject;
 /**
  * Created by al on 4/10/2016.
  */
-public class CaptainRenderObject extends RenderObject {
-    private final Array<TextureRegion> standreg;
-    TextureRegion tr;
-    Array<TextureRegion> runTrs;
-    Animation right, left, stand, wleft, wright;
-    float stateTime;
-
-    Texture walk,standTex;
+public class CaptainRenderObject extends CharacterRenderObject {
 
     public CaptainRenderObject(GameNode node) {
         super(node, "EngiDude.png");
@@ -60,37 +53,5 @@ public class CaptainRenderObject extends RenderObject {
         standreg.add(new TextureRegion(standTex, 150,0,50,50));
         standreg.add(new TextureRegion(standTex, 200,0,50,50));
         stand = new Animation(0.1f, standreg, Animation.PlayMode.LOOP);
-    }
-
-    @Override
-    public void draw(SpriteBatch batch) {
-        Animation play = stand;
-
-        if (myNode.state.getClass().equals(Stand.class))
-        {
-            play = stand;
-        }
-        if ( myNode.state.getClass().equals(RunningLeft.class))
-        {
-            play = left;
-        }
-        if ( myNode.state.getClass().equals(RunningRight.class))
-        {
-            play = right;
-        }
-        if ( myNode.state.getClass().equals(WalkingLeft.class))
-        {
-            play = wleft;
-        }
-        if ( myNode.state.getClass().equals(WalkingRight.class))
-        {
-            play = wright;
-        }
-
-
-        stateTime += Gdx.graphics.getDeltaTime();
-//        batch.draw(play.getKeyFrame(stateTime, true), 0,0);
-//        batch.draw(play.getKeyFrame(stateTime, true),0, 0, 45, 45);
-        batch.draw(play.getKeyFrame(stateTime, true), myNode.globalPos.x,myNode.globalPos.y, 0,0,45,45,1,1,myNode.globalRot);
     }
 }

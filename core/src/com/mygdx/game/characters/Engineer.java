@@ -11,7 +11,7 @@ public class Engineer extends GameCharacter {
 
     @Override
     public void load() {
-        RenderObject ro = new CaptainRenderObject(this);
+        RenderObject ro = new EngineerRenderObject(this);
         state = new Stand(this);
         ai = new RandomWalkAI(this);
         super.load();
