@@ -2,6 +2,7 @@ package com.mygdx.game.ship;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.core.GameNode;
 import com.mygdx.game.core.NodeHolder;
@@ -36,6 +37,10 @@ public class Ship extends NodeHolder {
         tile.pos.y = y * tile.height;
 
         tile.check(this);
+    }
+
+    public Tile get(Vector3 pos){
+        return shipTiles.get(((int)pos.x / 25), ((int)pos.y / 25));
     }
 
 }

@@ -13,21 +13,25 @@ public class Engineer extends GameCharacter {
     public void load() {
         RenderObject ro = new CaptainRenderObject(this);
         state = new Stand(this);
+        ai = new RandomWalkAI(this);
         super.load();
     }
 
     @Override
     public void render() {
-
         if ( Gdx.input.isKeyPressed(Input.Keys.A)){
             state.runLeft();
         }
         else if ( Gdx.input.isKeyPressed(Input.Keys.D)){
             state.runRight();
         }
-        else {
-            state.stand();
-        }
+//        else {
+//            state.stand();
+//        }
+
+        ai.update();
+
+
         super.render();
     }
 }
