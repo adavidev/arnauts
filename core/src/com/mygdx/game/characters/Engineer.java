@@ -2,6 +2,7 @@ package com.mygdx.game.characters;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.core.RenderObject;
 
 /**
@@ -12,6 +13,7 @@ public class Engineer extends GameCharacter {
     @Override
     public void load() {
         RenderObject ro = new EngineerRenderObject(this);
+        center = new Vector3(25,25,0);
         state = new Stand(this);
         ai = new RandomWalkAI(this);
         super.load();

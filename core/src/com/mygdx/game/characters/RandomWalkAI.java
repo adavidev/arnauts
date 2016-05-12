@@ -40,19 +40,11 @@ public class RandomWalkAI extends AI {
     }
 
     private void setTarget() {
-        target = new Vector3(node.pos).add(ARandom.rand((int)System.currentTimeMillis(), 150) - 75, 0, 0);
-    }
-
-    public boolean at(TileType type){
-        return type == ((Ship) node.parent).get(node.pos).type;
-    }
-
-    public boolean at(Tile tile){
-        return tile == ((Ship) node.parent).get(node.pos);
+        target = new Vector3(node.pos).add(5, 0, 0);
     }
 
     public void waitRandom(){
-        System.out.println("Im waiting");
+        System.out.println("Im standing on" + node.currentTile().toString());
         checkTime = 5;
 
     }

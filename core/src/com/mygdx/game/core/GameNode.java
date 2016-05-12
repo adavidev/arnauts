@@ -17,4 +17,7 @@ public abstract class GameNode extends NodeHolder {
 
     public State state;
 
+    public GameNode(NodeHolder o) {
+        super(o);
+    }
 }

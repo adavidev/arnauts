@@ -40,11 +40,17 @@ public class Ship extends NodeHolder {
     }
 
     public Tile get(Vector3 pos) {
-        return shipTiles.get(((int) pos.x / 25), ((int) pos.y / 25));
+        return get(((int) pos.x / 25), ((int) pos.y / 50));
     }
 
     public Tile get(int x, int y){
-        Tile tile = shipTiles.get(x,y);
+        Tile tile;
+        try {
+            tile = shipTiles.get(x,y);
+        } catch (Exception e){
+            tile = new Space();
+        }
+
         if(tile == null){
             tile = new Space();
         }
