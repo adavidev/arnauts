@@ -31,10 +31,7 @@ public class Ship extends NodeHolder {
         shipTiles.addToInnerArray(x,y,tile);
         nodes.add(tile);
         tile.parent = this;
-        tile.x = x;
-        tile.y = y;
-        tile.pos.x = x * tile.width;
-        tile.pos.y = y * tile.height;
+        tile.setPos(x,y);
 
         tile.check(this);
     }

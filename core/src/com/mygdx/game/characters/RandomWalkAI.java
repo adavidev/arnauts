@@ -50,10 +50,10 @@ public class RandomWalkAI extends AI {
     }
 
     public void walkTo(Vector3 pos){
-
-        if (pos.x > node.pos.x){
+        Vector3 rpos = new Vector3(pos).rotate(new Vector3(0,0,1), node.globalRot);
+        if (rpos.x > node.pos.x + 1){
             node.state.runRight();
-        } else if(pos.x < node.pos.x) {
+        } else if(rpos.x < node.pos.x - 1) {
             node.state.runLeft();
         }else
         {

@@ -30,6 +30,6 @@ public abstract class GameCharacter extends GameNode {
     }
 
     public Tile currentTile(){
-        return ((Ship) parent).get(new Vector3(pos).add(center));
+        return ((Ship) parent).get(new Vector3(pos).rotate(new Vector3(0,0,1), - globalRot).add(center));
     }
 }

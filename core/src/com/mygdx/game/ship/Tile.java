@@ -1,5 +1,6 @@
 package com.mygdx.game.ship;
 
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.core.GameNode;
 import com.mygdx.game.core.NodeHolder;
 
@@ -23,5 +24,13 @@ public abstract class Tile extends GameNode {
 
     public void check(Ship ship) {
 
+    }
+
+    public void setPos(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.pos.x = x * width;
+        this.pos.y = y * height;
+        this.localpos = new Vector3(pos);
     }
 }

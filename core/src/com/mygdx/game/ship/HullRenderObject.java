@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.core.GameNode;
 import com.mygdx.game.core.RenderManager;
 import com.mygdx.game.core.RenderObject;
@@ -50,6 +51,10 @@ public class HullRenderObject {
         public void draw(SpriteBatch batch) {
             Ship s = (Ship) myNode.parent;
             Texture tr;
+
+            Vector3 rotup = new Vector3(0,50,0).rotate(new Vector3(0,0,1), ((Tile) myNode).globalRot).add(((Tile) myNode).globalPos);
+            Vector3 rotdn = new Vector3(0,-50,0).rotate(new Vector3(0,0,1), ((Tile) myNode).globalRot).add(((Tile) myNode).globalPos);
+
             if (s.get(((Tile) myNode).x + 1, (((Tile) myNode).y)).type == TileType.Corridor) {
                 batch.draw(trhulll, myNode.globalPos.x, myNode.globalPos.y, 0, 0, 25, 50, 1, 1, myNode.globalRot);
             }
@@ -64,19 +69,19 @@ public class HullRenderObject {
             }
             if (s.get(((Tile) myNode).x + 1, (((Tile) myNode).y - 1)).type == TileType.Hull &&
                     s.get(((Tile) myNode).x, (((Tile) myNode).y - 1)).type == TileType.None) {
-                batch.draw(trhullbl, myNode.globalPos.x, myNode.globalPos.y - 50, 0, 0, 25, 50, 1, 1, myNode.globalRot);
+                batch.draw(trhullbl, rotdn.x, rotdn.y, 0, 0, 25, 50, 1, 1, myNode.globalRot);
             }
             if (s.get(((Tile) myNode).x - 1, (((Tile) myNode).y - 1)).type == TileType.Hull &&
                     s.get(((Tile) myNode).x, (((Tile) myNode).y - 1)).type == TileType.None) {
-                batch.draw(trhullbr, myNode.globalPos.x, myNode.globalPos.y - 50, 0, 0, 25, 50, 1, 1, myNode.globalRot);
+                batch.draw(trhullbr, rotdn.x, rotdn.y, 0, 0, 25, 50, 1, 1, myNode.globalRot);
             }
             if (s.get(((Tile) myNode).x + 1, (((Tile) myNode).y + 1)).type == TileType.Hull &&
                     s.get(((Tile) myNode).x, (((Tile) myNode).y + 1)).type == TileType.None) {
-                batch.draw(trhulltl, myNode.globalPos.x, myNode.globalPos.y + 50, 0, 0, 25, 50, 1, 1, myNode.globalRot);
+                batch.draw(trhulltl, rotup.x, rotup.y, 0, 0, 25, 50, 1, 1, myNode.globalRot);
             }
             if (s.get(((Tile) myNode).x - 1, (((Tile) myNode).y + 1)).type == TileType.Hull &&
                     s.get(((Tile) myNode).x, (((Tile) myNode).y + 1)).type == TileType.None) {
-                batch.draw(trhulltr, myNode.globalPos.x, myNode.globalPos.y + 50, 0, 0, 25, 50, 1, 1, myNode.globalRot);
+                batch.draw(trhulltr, rotup.x, rotup.y, 0, 0, 25, 50, 1, 1, myNode.globalRot);
             }
         }
     }

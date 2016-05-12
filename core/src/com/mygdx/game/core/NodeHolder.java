@@ -16,6 +16,7 @@ public abstract class NodeHolder {
     public Vector3 lastPos;
     public float lastRot;
     public int globalRot;
+    public Vector3 localpos;
 
     public NodeHolder(NodeHolder holder) {
         if (holder != null)
