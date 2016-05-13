@@ -19,7 +19,8 @@ public class RandomWalkAI extends AI {
 
     public RandomWalkAI(GameCharacter node) {
         super(node);
-        target = new Vector3(50,0,0).add(new Vector3(node.pos));
+        target = new Vector3(25,0,0);
+        checkTime = 3;
     }
 
     @Override
@@ -33,14 +34,15 @@ public class RandomWalkAI extends AI {
             setTarget();
         }
 
-        walkTo(target);
+        walkTo();
 
 
         checkTime-= Gdx.graphics.getDeltaTime();
     }
 
     private void setTarget() {
-        target = new Vector3(node.pos).add(5, 0, 0);
+        Vector3 pos = new Vector3(node.pos).rotate(NodeHolder.rotAxis, -node.globalRot);
+        target = new Vector3(5, 0, 0).add(pos);
     }
 
     public void waitRandom(){
@@ -49,11 +51,12 @@ public class RandomWalkAI extends AI {
 
     }
 
-    public void walkTo(Vector3 pos){
-        Vector3 rpos = new Vector3(pos).rotate(new Vector3(0,0,1), node.globalRot);
-        if (rpos.x > node.pos.x + 1){
+    public void walkTo(){
+        Vector3 rpos = new Vector3(target);
+        Vector3 npos = new Vector3(node.pos).rotate(NodeHolder.rotAxis, -node.globalRot);
+        if (rpos.x > npos.x + 1){
             node.state.runRight();
-        } else if(rpos.x < node.pos.x - 1) {
+        } else if(rpos.x < npos.x - 1) {
             node.state.runLeft();
         }else
         {

@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * Created by al on 4/7/2016.
  */
 public abstract class NodeHolder {
+    public static Vector3 rotAxis = new Vector3(0,0,1);
     public NodeHolder parent;
     public ArrayList<NodeHolder> nodes;
     public Vector3 pos;
@@ -67,42 +68,31 @@ public abstract class NodeHolder {
         globalPos.setZero();
         globalRot = 0;
 
-//        globalPos.add(pos);
         globalRot += rot;
 
         if (parent != null){
             globalRot += parent.rot;
         }
 
-        for (NodeHolder node : ancestors()) {
-            globalPos.add(node.pos);
-//            globalRot += node.rot;
-        }
+        globalPos = ancestralPos();
 
-        pos.rotate(new Vector3(0,0,1), -lastRot);
-        pos.rotate(new Vector3(0,0,1), globalRot);
+        pos.rotate(NodeHolder.rotAxis, -lastRot);
+        pos.rotate(NodeHolder.rotAxis, globalRot);
 
         for(NodeHolder node : nodes){
             node.render();
         }
 
-//        rot = globalRot;
-
-
-//        for(NodeHolder node : nodes){
-//
-//            node.globalPos.setZero();
-//            node.pos.rotate(new Vector3(0,0,1), -lastRot);
-//            node.pos.rotate(new Vector3(0,0,1), rot);
-//            node.rot = rot;
-//
-//            node.globalPos.add(pos).add(node.pos);
-//
-//            node.render();
-//        }
-
-//        lastPos = pos;
         lastRot = globalRot;
+    }
+
+    public Vector3 ancestralPos(){
+        Vector3 total = new Vector3(0,0,0);
+        for (NodeHolder node : ancestors()) {
+            total.add(node.pos);
+        }
+
+        return total;
     }
 
     public static void main(String[] args){

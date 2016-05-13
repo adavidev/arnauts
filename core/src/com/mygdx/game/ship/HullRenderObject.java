@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.core.GameNode;
+import com.mygdx.game.core.NodeHolder;
 import com.mygdx.game.core.RenderManager;
 import com.mygdx.game.core.RenderObject;
 
@@ -52,8 +53,8 @@ public class HullRenderObject {
             Ship s = (Ship) myNode.parent;
             Texture tr;
 
-            Vector3 rotup = new Vector3(0,50,0).rotate(new Vector3(0,0,1), ((Tile) myNode).globalRot).add(((Tile) myNode).globalPos);
-            Vector3 rotdn = new Vector3(0,-50,0).rotate(new Vector3(0,0,1), ((Tile) myNode).globalRot).add(((Tile) myNode).globalPos);
+            Vector3 rotup = new Vector3(0,50,0).rotate(NodeHolder.rotAxis, ((Tile) myNode).globalRot).add(((Tile) myNode).globalPos);
+            Vector3 rotdn = new Vector3(0,-50,0).rotate(NodeHolder.rotAxis, ((Tile) myNode).globalRot).add(((Tile) myNode).globalPos);
 
             if (s.get(((Tile) myNode).x + 1, (((Tile) myNode).y)).type == TileType.Corridor) {
                 batch.draw(trhulll, myNode.globalPos.x, myNode.globalPos.y, 0, 0, 25, 50, 1, 1, myNode.globalRot);

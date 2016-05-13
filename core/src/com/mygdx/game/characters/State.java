@@ -1,6 +1,7 @@
 package com.mygdx.game.characters;
 
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.core.NodeHolder;
 
 /**
  * Created by Alan on 4/2/2016.
@@ -29,7 +30,7 @@ class RunningLeft extends State {
     public void stand() {character.state = new Stand(character);}
     public void runLeft() {
         Vector3 sub = new Vector3(-.5f,0,0);
-        sub.rotate(new Vector3(0,0,1),character.globalRot);
+        sub.rotate(NodeHolder.rotAxis,character.globalRot);
         character.pos.add(sub);
     }
     public void runRight() {character.state = new Stand(character);}
@@ -47,7 +48,7 @@ class RunningRight extends State {
     public void runLeft() { character.state = new Stand(character); }
     public void runRight() {
         Vector3 sub = new Vector3(.5f,0,0);
-        sub.rotate(new Vector3(0,0,1),character.globalRot);
+        sub.rotate(NodeHolder.rotAxis,character.globalRot);
         character.pos.add(sub);
     }
     public void walkLeft() {}

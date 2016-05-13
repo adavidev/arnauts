@@ -2,6 +2,7 @@ package com.mygdx.game.characters;
 
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.core.GameNode;
+import com.mygdx.game.core.NodeHolder;
 import com.mygdx.game.ship.Ship;
 import com.mygdx.game.ship.Tile;
 import com.mygdx.game.ship.TileType;
@@ -30,6 +31,6 @@ public abstract class GameCharacter extends GameNode {
     }
 
     public Tile currentTile(){
-        return ((Ship) parent).get(new Vector3(pos).rotate(new Vector3(0,0,1), - globalRot).add(center));
+        return ((Ship) parent).get(new Vector3(pos).rotate(NodeHolder.rotAxis, - globalRot).add(center));
     }
 }
