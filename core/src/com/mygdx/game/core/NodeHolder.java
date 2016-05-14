@@ -95,6 +95,10 @@ public abstract class NodeHolder {
         return total;
     }
 
+    public Vector3 basicPos(){
+        return new Vector3(pos).rotate(NodeHolder.rotAxis, -globalRot);
+    }
+
     public static void main(String[] args){
         NodeHolder a = new NodeHolder() { };
         NodeHolder b = new NodeHolder(a) { };

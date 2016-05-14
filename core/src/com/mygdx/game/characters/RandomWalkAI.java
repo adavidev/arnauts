@@ -41,12 +41,13 @@ public class RandomWalkAI extends AI {
     }
 
     private void setTarget() {
-        Vector3 pos = new Vector3(node.pos).rotate(NodeHolder.rotAxis, -node.globalRot);
-        target = new Vector3(5, 0, 0).add(pos);
+        target = new Vector3(5, 0, 0).add(node.basicPos());
     }
 
     public void waitRandom(){
-        System.out.println("Im standing on" + node.currentTile().toString());
+        System.out.println("Im standing on: " + node.currentTile().toString());
+        System.out.println("Tile Position: " + node.currentTile().basicPos());
+
         checkTime = 5;
 
     }
