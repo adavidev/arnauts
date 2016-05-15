@@ -45,8 +45,8 @@ public class RandomWalkAI extends AI {
     }
 
     public void waitRandom(){
-//        System.out.println("Im standing on: " + node.currentTile().toString());
-//        System.out.println("Tile Position: " + node.currentTile().getCenter());
+        System.out.println("Im standing on: " + node.currentTile().toString());
+        System.out.println("Tile Position: " + node.currentTile().getCenter());
 
         checkTime = 5;
 
