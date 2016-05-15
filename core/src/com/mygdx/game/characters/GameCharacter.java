@@ -13,11 +13,12 @@ import com.mygdx.game.ship.TileType;
 public abstract class GameCharacter extends GameNode {
     public int walkSpeed, climbSpeed;
     public AI ai;
-    public Vector3 center = Vector3.Zero;
 
     public GameCharacter()
     {
         super();
+        height = 50;
+        width = 50;
     }
 
 

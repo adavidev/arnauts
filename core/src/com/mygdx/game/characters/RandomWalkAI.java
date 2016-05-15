@@ -45,8 +45,8 @@ public class RandomWalkAI extends AI {
     }
 
     public void waitRandom(){
-        System.out.println("Im standing on: " + node.currentTile().toString());
-        System.out.println("Tile Position: " + node.currentTile().basicPos());
+//        System.out.println("Im standing on: " + node.currentTile().toString());
+//        System.out.println("Tile Position: " + node.currentTile().getCenter());
 
         checkTime = 5;
 
@@ -54,7 +54,7 @@ public class RandomWalkAI extends AI {
 
     public void walkTo(){
         Vector3 rpos = new Vector3(target);
-        Vector3 npos = new Vector3(node.pos).rotate(NodeHolder.rotAxis, -node.globalRot);
+        Vector3 npos = new Vector3(node.basicPos());
         if (rpos.x > npos.x + 1){
             node.state.runRight();
         } else if(rpos.x < npos.x - 1) {

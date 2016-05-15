@@ -28,7 +28,7 @@ public class CorridorRenderObject {
         float stateTime;
 
         public Background(GameNode node) {
-            super(node, "Corridor.png");
+            super(node, "tileset.png");
             this.zIndex = 5;
             trs = new TextureRegion[3];
             trs[0] = new TextureRegion(this, 75,0,25,50);
@@ -52,7 +52,7 @@ public class CorridorRenderObject {
         float stateTime;
 
         public MiddleGround(GameNode node) {
-            super(node, "Corridor.png");
+            super(node, "tileset.png");
             this.zIndex = 6;
             TextureRegion[] trs = new TextureRegion[3];
             trs[0] = new TextureRegion(this, 0,0,25,50);
@@ -77,7 +77,7 @@ public class CorridorRenderObject {
         float stateTime;
 
         public Doodad(GameNode node) {
-            super(node, "Corridor.png");
+            super(node, "tileset.png");
             this.zIndex = 7;
             trs = new TextureRegion[13];
             trs[0] = new TextureRegion(this, 275,0,25,50);

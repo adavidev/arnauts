@@ -6,6 +6,6 @@ package com.mygdx.game.ship;
 public class Corridor extends Tile {
     public Corridor(){
         CorridorRenderObject ro = new CorridorRenderObject(this);
-        type = TileType.Corridor;
+        type = TileType.Walkable;
     }
 }

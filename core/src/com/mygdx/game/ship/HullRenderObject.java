@@ -1,6 +1,5 @@
 package com.mygdx.game.ship;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -56,16 +55,16 @@ public class HullRenderObject {
             Vector3 rotup = new Vector3(0,50,0).rotate(NodeHolder.rotAxis, ((Tile) myNode).globalRot).add(((Tile) myNode).globalPos);
             Vector3 rotdn = new Vector3(0,-50,0).rotate(NodeHolder.rotAxis, ((Tile) myNode).globalRot).add(((Tile) myNode).globalPos);
 
-            if (s.get(((Tile) myNode).x + 1, (((Tile) myNode).y)).type == TileType.Corridor) {
+            if (s.get(((Tile) myNode).x + 1, (((Tile) myNode).y)).type == TileType.Walkable) {
                 batch.draw(trhulll, myNode.globalPos.x, myNode.globalPos.y, 0, 0, 25, 50, 1, 1, myNode.globalRot);
             }
-            if (s.get(((Tile) myNode).x - 1, ((Tile) myNode).y).type == TileType.Corridor) {
+            if (s.get(((Tile) myNode).x - 1, ((Tile) myNode).y).type == TileType.Walkable) {
                 batch.draw(trhullr, myNode.globalPos.x, myNode.globalPos.y, 0, 0, 25, 50, 1, 1, myNode.globalRot);
             }
-            if (s.get(((Tile) myNode).x, (((Tile) myNode).y + 1)).type == TileType.Corridor) {
+            if (s.get(((Tile) myNode).x, (((Tile) myNode).y + 1)).type == TileType.Walkable) {
                 batch.draw(trhullb, myNode.globalPos.x, myNode.globalPos.y, 0, 0, 25, 50, 1, 1, myNode.globalRot);
             }
-            if (s.get(((Tile) myNode).x, (((Tile) myNode).y - 1)).type == TileType.Corridor) {
+            if (s.get(((Tile) myNode).x, (((Tile) myNode).y - 1)).type == TileType.Walkable) {
                 batch.draw(trhullt, myNode.globalPos.x, myNode.globalPos.y, 0, 0, 25, 50, 1, 1, myNode.globalRot);
             }
             if (s.get(((Tile) myNode).x + 1, (((Tile) myNode).y - 1)).type == TileType.Hull &&

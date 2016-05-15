@@ -8,18 +8,21 @@ import com.mygdx.game.core.NodeHolder;
  * Created by al on 4/7/2016.
  */
 public abstract class Tile extends GameNode {
-    public float width = 25;
-    public float height = 50;
+
     public int x;
     public int y;
     public TileType type = TileType.None;
 
     public Tile(NodeHolder o) {
         super(o);
+
+        setSize(25,50);
     }
 
     public Tile(){
         super();
+
+        setSize(25,50);
     }
 
     public void check(Ship ship) {

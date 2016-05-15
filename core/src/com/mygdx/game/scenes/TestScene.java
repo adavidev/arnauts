@@ -56,7 +56,7 @@ public class TestScene extends Scene{
         ship.addTile(new Corridor(), 2, 2);
         ship.addTile(new Corridor(), 4, 2);
         ship.addTile(new Corridor(), 3, 2);
-//        ship.addTile(new Corridor(), 1, 2);
+//        ship.addTile(new Walkable(), 1, 2);
         ship.addTile(new Corridor(), 1, 1);
         ship.addTile(new Corridor(), 3, 1);
         ship.addTile(new Corridor(), 2, 1);

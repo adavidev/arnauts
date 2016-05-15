@@ -18,6 +18,9 @@ public abstract class NodeHolder {
     public float lastRot;
     public int globalRot;
     public Vector3 localpos;
+    public Vector3 center = Vector3.Zero;
+    public float width = 10;
+    public float height = 10;
 
     public NodeHolder(NodeHolder holder) {
         if (holder != null)
@@ -52,6 +55,13 @@ public abstract class NodeHolder {
     public void add(NodeHolder e) {
         nodes.add(e);
         e.parent = this;
+    }
+
+    public void setSize(int x,int y){
+        this.width = x;
+        this.height = y;
+        this.center.setZero();
+        this.center.add(x/2,y/2,0);
     }
 
     public void remove(NodeHolder e) {
@@ -97,6 +107,14 @@ public abstract class NodeHolder {
 
     public Vector3 basicPos(){
         return new Vector3(pos).rotate(NodeHolder.rotAxis, -globalRot);
+    }
+
+    public Vector3 getCenter(){
+        return new Vector3(center).rotate(NodeHolder.rotAxis, globalRot).add(pos);
+    }
+
+    public Vector3 basicCenter(){
+        return basicPos().add(center);
     }
 
     public static void main(String[] args){
