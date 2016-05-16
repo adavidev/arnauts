@@ -59,7 +59,7 @@ public class TestScene extends Scene{
         ship.addTile(new Corridor(), 1, 1);
         ship.addTile(new Corridor(), 3, 1);
         ship.addTile(new Corridor(), 2, 1);
-        ship.addTile(new CleanCorridor(), 4, 1);
+//        ship.addTile(new CleanCorridor(), 4, 1);
         ship.addTile(new CleanCorridor(), 5, 1);
         ship.addTile(new CleanCorridor(), 6, 1);
         ship.addTile(new CleanCorridor(), 7, 1);
@@ -67,6 +67,7 @@ public class TestScene extends Scene{
         ship.addTile(new Hull(), 5, 2);
         ship.addTile(new Hull(), 2, 3);
         ship.addTile(new Hull(), 8, 1);
+        ship.addTile(new Hull(), 4, 1);
         ship.pos.add(-100,-100,0);
 
         e.pos.add(25,50,0);
