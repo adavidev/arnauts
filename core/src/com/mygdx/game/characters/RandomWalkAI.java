@@ -22,13 +22,17 @@ public class RandomWalkAI extends AI {
 
     public RandomWalkAI(GameCharacter node) {
         super(node);
-        target = new Vector3(35,0,0);
+        target = null;
         checkTime = 3;
     }
 
     @Override
     public void update() {
         stateTime += Gdx.graphics.getDeltaTime();
+
+        if (target == null) {
+            target = node.basicCenter();
+        }
 
         if (checkTime <= 0 && node.state.getClass() == Stand.class){
 
@@ -44,16 +48,16 @@ public class RandomWalkAI extends AI {
     }
 
     private void setTarget() {
-        ArrayList<Tile> available = new Astar(node).available();
+        ArrayList<Astar.ANode> available = new Astar(node).available();
         target = available.get(ARandom.rand((int) System.currentTimeMillis(), available.size())).basicCenter();
 //        target = new Vector3(15, 0, 0).add(node.basicPos());
     }
 
     public void waitRandom(){
-        System.out.println("Available: " + new Astar(node).available());
-        System.out.println("Tile Position: " + node.currentTile().getCenter());
+//        System.out.println("Available: " + new Astar(node).available());
+//        System.out.println("Tile Position: " + node.currentTile().getCenter());
 
-        checkTime = 5;
+        checkTime = ARandom.rand((int) System.currentTimeMillis(), 4) + 3;
 
     }
 

@@ -1,6 +1,7 @@
 package com.mygdx.game.core;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.characters.GameCharacter;
 import com.mygdx.game.ship.Ship;
 import com.mygdx.game.ship.Tile;
@@ -14,30 +15,33 @@ import java.util.ArrayList;
 public class Astar {
 
     public Ship ship;
-    public ArrayList<Tile> nodeList;
+    public ArrayList<ANode> nodeList;
     public GameCharacter character;
 
     public Astar(GameCharacter character){
         ship = (Ship)character.currentTile().parent;
         this.character = character;
-        nodeList = new ArrayList<Tile>();
+        nodeList = new ArrayList<ANode>();
     }
 
-    public ArrayList<Tile> available(){
-        Tile current = character.currentTile();
+    public ArrayList<ANode> available(){
+        ANode current = new ANode(character.currentTile(), null, character.currentTile().type);
         nodeList.clear();
         nodeList.add(current);
         return build(nodeList);
     }
 
-    public ArrayList<Tile> build(ArrayList<Tile> searchList){
-        ArrayList<Tile> toAdd = new ArrayList<Tile>();
+    public ArrayList<ANode> build(ArrayList<ANode> searchList){
+        ArrayList<ANode> toAdd = new ArrayList<ANode>();
         if(character.currentTile().type == TileType.Walkable) {
-            for (Tile tile : searchList) {
-                Tile up = ship.get(tile.x, tile.y + 1);
-                Tile down = ship.get(tile.x, tile.y - 1);
-                Tile left = ship.get(tile.x - 1, tile.y);
-                Tile right = ship.get(tile.x + 1, tile.y);
+            for (ANode tile : searchList) {
+                ANode up = new ANode(ship.get(tile.x(), tile.y() + 1), tile, ship.get(tile.x(), tile.y() + 1).type);
+                ANode down = new ANode(ship.get(tile.x(), tile.y() - 1), tile, ship.get(tile.x(), tile.y() - 1).type);
+                ANode left = new ANode(ship.get(tile.x() - 1, tile.y()), tile, ship.get(tile.x() - 1, tile.y()).type);
+                ANode right = new ANode(ship.get(tile.x() + 1, tile.y()), tile, ship.get(tile.x() + 1, tile.y()).type);
+//                ANode down = ship.get(tile.x, tiley() - 1);
+//                ANode left = ship.get(tile.x - 1, tiley());
+//                ANode right = ship.get(tile.x + 1, tiley());
 
                 if (left.type == TileType.Walkable && !searchList.contains(left)) {
                     toAdd.add(left);
@@ -56,8 +60,36 @@ public class Astar {
 
     }
 
-    private class ANode extends Tile {
-        public ANode(Tile tile, Tile previous, GAction action) {
+    public class ANode {
+        public Tile current;
+        public ANode previous;
+        public TileType type;
+
+        public ANode(Tile tile, ANode previous, TileType action) {
+            current = tile;
+            this.previous = previous;
+            type = action;
+        }
+
+        public int x() {
+            return current.x;
+        }
+
+        public int y() {
+            return current.y;
+        }
+
+        public Vector3 basicCenter() {
+            return current.basicCenter();
+        }
+
+        public boolean equals(Object o){
+            if (o instanceof ANode){
+                ANode temp = (ANode)o;
+                if (this.current.equals(temp.current))
+                    return true;
+            }
+            return false;
         }
     }
 }

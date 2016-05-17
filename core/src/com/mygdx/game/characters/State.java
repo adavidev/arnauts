@@ -29,7 +29,7 @@ class RunningLeft extends State {
 
     public void stand() {character.state = new Stand(character);}
     public void runLeft() {
-        Vector3 sub = new Vector3(-.5f,0,0);
+        Vector3 sub = new Vector3(-character.walkSpeed,0,0);
         sub.rotate(NodeHolder.rotAxis,character.globalRot);
         character.pos.add(sub);
     }
@@ -47,7 +47,7 @@ class RunningRight extends State {
     }
     public void runLeft() { character.state = new Stand(character); }
     public void runRight() {
-        Vector3 sub = new Vector3(.5f,0,0);
+        Vector3 sub = new Vector3(character.walkSpeed,0,0);
         sub.rotate(NodeHolder.rotAxis,character.globalRot);
         character.pos.add(sub);
     }

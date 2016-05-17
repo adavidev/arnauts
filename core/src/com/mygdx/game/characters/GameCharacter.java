@@ -11,7 +11,8 @@ import com.mygdx.game.ship.TileType;
  * Created by Alan on 3/29/2016.
  */
 public abstract class GameCharacter extends GameNode {
-    public int walkSpeed, climbSpeed;
+    public float walkSpeed = .5f;
+    public float climbSpeed = .3f;
     public AI ai;
 
     public GameCharacter()
