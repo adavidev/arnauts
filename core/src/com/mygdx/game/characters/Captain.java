@@ -11,7 +11,7 @@ public class Captain extends GameCharacter {
     @Override
     public void load() {
         RenderObject ro = new CaptainRenderObject(this);
-        center = new Vector3(25,25,0);
+        center = new Vector3(20,20,0);
         state = new Stand(this);
         walkSpeed = .3f;
         ai = new RandomWalkAI(this);

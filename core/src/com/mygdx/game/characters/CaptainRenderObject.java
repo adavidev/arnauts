@@ -17,8 +17,8 @@ public class CaptainRenderObject extends CharacterRenderObject {
     public CaptainRenderObject(GameNode node) {
         super(node, "EngiDude.png");
 
-        walk = new Texture("Captwalk.png");
-        standTex= new Texture("Captstand.png");
+        walk = new Texture("Captwalk1.png");
+        standTex= new Texture("Captstand1.png");
         runTrs = new Array<TextureRegion>();
         runTrs.add(new TextureRegion(walk, 0,0,50,50));
         runTrs.add(new TextureRegion(walk, 50,0,50,50));

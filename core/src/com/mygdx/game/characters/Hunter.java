@@ -13,7 +13,7 @@ public class Hunter extends GameCharacter {
     @Override
     public void load() {
         RenderObject ro = new HunterRenderObject(this);
-        center = new Vector3(25,25,0);
+        center = new Vector3(20,20,0);
         state = new Stand(this);
         walkSpeed = .7f;
         ai = new RandomWalkAI(this);

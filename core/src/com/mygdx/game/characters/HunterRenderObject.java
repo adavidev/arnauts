@@ -13,8 +13,8 @@ public class HunterRenderObject extends CharacterRenderObject {
     public HunterRenderObject(GameNode node) {
         super(node, "EngiDude.png");
 
-        walk = new Texture("hunter-running.png");
-        standTex= new Texture("hunter-stand.png");
+        walk = new Texture("hunter-running1.png");
+        standTex= new Texture("hunter-stand1.png");
         runTrs = new Array<TextureRegion>();
         runTrs.add(new TextureRegion(walk, 0,0,50,50));
         runTrs.add(new TextureRegion(walk, 50,0,50,50));

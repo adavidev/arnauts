@@ -13,7 +13,7 @@ public class Engineer extends GameCharacter {
     @Override
     public void load() {
         RenderObject ro = new EngineerRenderObject(this);
-        center = new Vector3(25,25,0);
+        center = new Vector3(20,20,0);
         state = new Stand(this);
         ai = new RandomWalkAI(this);
         super.load();
