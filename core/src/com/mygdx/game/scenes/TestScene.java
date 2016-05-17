@@ -71,6 +71,10 @@ public class TestScene extends Scene{
         ship.addTile(new Hull(), 2, 3);
         ship.addTile(new Hull(), 8, 1);
         ship.addTile(new Hull(), 4, 1);
+
+        ship.addInteractable(new Ladder(), 3,1);
+        ship.addInteractable(new Ladder(), 3,2);
+
         ship.pos.add(-100,-100,0);
 
         e.pos.add(25,50,0);

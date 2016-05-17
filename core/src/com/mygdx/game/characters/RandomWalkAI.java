@@ -50,7 +50,6 @@ public class RandomWalkAI extends AI {
     private void setTarget() {
         ArrayList<Astar.ANode> available = new Astar(node).available();
         target = available.get(ARandom.rand((int) System.currentTimeMillis(), available.size())).basicCenter();
-//        target = new Vector3(15, 0, 0).add(node.basicPos());
     }
 
     public void waitRandom(){
@@ -72,8 +71,5 @@ public class RandomWalkAI extends AI {
         {
             node.state.stand();
         }
-//        get relative direction
-//        walk relative direction
-//        if I am at the position, i stop, otherwise keep walking
     }
 }

@@ -43,10 +43,10 @@ public class Astar {
 //                ANode left = ship.get(tile.x - 1, tiley());
 //                ANode right = ship.get(tile.x + 1, tiley());
 
-                if (left.type == TileType.Walkable && !searchList.contains(left)) {
+                if (left.isType(TileType.Walkable) && !searchList.contains(left)) {
                     toAdd.add(left);
                 }
-                if (right.type == TileType.Walkable && !searchList.contains(right)) {
+                if (right.isType(TileType.Walkable) && !searchList.contains(right)) {
                     toAdd.add(right);
                 }
             }
@@ -90,6 +90,10 @@ public class Astar {
                     return true;
             }
             return false;
+        }
+
+        public boolean isType(TileType walkable) {
+            return current.isType(walkable);
         }
     }
 }
