@@ -3,6 +3,9 @@ package com.mygdx.game.characters;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.characters.AI.RandomWalkAI;
+import com.mygdx.game.characters.State.Stand;
+import com.mygdx.game.characters.State.State;
 import com.mygdx.game.core.RenderObject;
 
 /**

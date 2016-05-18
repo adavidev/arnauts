@@ -1,6 +1,7 @@
 package com.mygdx.game.characters;
 
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.characters.AI.AI;
 import com.mygdx.game.core.GameNode;
 import com.mygdx.game.core.NodeHolder;
 import com.mygdx.game.ship.Ship;

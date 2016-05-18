@@ -1,6 +1,8 @@
 package com.mygdx.game.characters;
 
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.characters.State.Stand;
+import com.mygdx.game.characters.State.State;
 import com.mygdx.game.core.RenderObject;
 
 /**
@@ -14,14 +16,14 @@ public class Captain extends GameCharacter {
         center = new Vector3(20,20,0);
         state = new Stand(this);
         walkSpeed = .3f;
-        ai = new RandomWalkAI(this);
+//        ai = new RandomWalkAI(this);
         super.load();
     }
 
     @Override
     public void render() {
 
-        ai.update();
+//        ai.update();
 
 
         super.render();

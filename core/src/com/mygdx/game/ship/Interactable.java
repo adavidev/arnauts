@@ -2,7 +2,6 @@ package com.mygdx.game.ship;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.core.Astar;
 import com.mygdx.game.core.GameNode;
 import com.mygdx.game.core.NodeHolder;
 

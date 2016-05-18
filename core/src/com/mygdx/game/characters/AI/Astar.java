@@ -1,6 +1,5 @@
-package com.mygdx.game.core;
+package com.mygdx.game.characters.AI;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.characters.GameCharacter;
 import com.mygdx.game.ship.Ship;
@@ -17,11 +16,13 @@ public class Astar {
     public Ship ship;
     public ArrayList<ANode> nodeList;
     public GameCharacter character;
+    public ANode target;
 
     public Astar(GameCharacter character){
         ship = (Ship)character.currentTile().parent;
         this.character = character;
         nodeList = new ArrayList<ANode>();
+        target = null;
     }
 
     public ArrayList<ANode> available(){
@@ -35,13 +36,10 @@ public class Astar {
         ArrayList<ANode> toAdd = new ArrayList<ANode>();
         if(character.currentTile().type == TileType.Walkable) {
             for (ANode tile : searchList) {
-                ANode up = new ANode(ship.get(tile.x(), tile.y() + 1), tile, ship.get(tile.x(), tile.y() + 1).type);
-                ANode down = new ANode(ship.get(tile.x(), tile.y() - 1), tile, ship.get(tile.x(), tile.y() - 1).type);
+                ANode up = new ANode(ship.get(tile.x(), tile.y() + 1), tile, TileType.Climbable);
+                ANode down = new ANode(ship.get(tile.x(), tile.y() - 1), tile, TileType.Climbable);
                 ANode left = new ANode(ship.get(tile.x() - 1, tile.y()), tile, ship.get(tile.x() - 1, tile.y()).type);
                 ANode right = new ANode(ship.get(tile.x() + 1, tile.y()), tile, ship.get(tile.x() + 1, tile.y()).type);
-//                ANode down = ship.get(tile.x, tiley() - 1);
-//                ANode left = ship.get(tile.x - 1, tiley());
-//                ANode right = ship.get(tile.x + 1, tiley());
 
                 if (left.isType(TileType.Walkable) && !searchList.contains(left)) {
                     toAdd.add(left);
@@ -49,15 +47,48 @@ public class Astar {
                 if (right.isType(TileType.Walkable) && !searchList.contains(right)) {
                     toAdd.add(right);
                 }
+                if (up.isType(TileType.Climbable) && tile.isType(TileType.Climbable) && !searchList.contains(up)) {
+                    toAdd.add(up);
+                }
+                if (down.isType(TileType.Climbable) && tile.isType(TileType.Climbable) && !searchList.contains(down)) {
+                    toAdd.add(down);
+                }
             }
         }
-        if (toAdd.isEmpty())
+        if (toAdd.isEmpty() || target != null && searchList.contains(target))
             return searchList;
         else{
             searchList.addAll(toAdd);
             return build(searchList);
         }
 
+    }
+
+    public ArrayList<ANode> findTarget(Tile tile){
+        target = new ANode(tile, null, tile.type);
+        ANode current = new ANode(character.currentTile(), null, character.currentTile().type);
+        nodeList.clear();
+        nodeList.add(current);
+        build(nodeList);
+
+        ANode foundTarget = nodeList.get(nodeList.indexOf(target));
+
+        return createPath(foundTarget);
+    }
+
+    private ArrayList<ANode> createPath(ANode foundTarget){
+        TileType last = foundTarget.type;
+        int index = nodeList.indexOf(foundTarget);
+
+        ArrayList<ANode> path = new ArrayList<ANode>();
+        ANode current = foundTarget;
+
+        while (current != null){
+            path.add(0, current);
+            current = current.previous;
+        }
+
+        return path;
     }
 
     public class ANode {

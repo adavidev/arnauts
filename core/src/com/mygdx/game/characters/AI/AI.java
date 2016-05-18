@@ -1,6 +1,6 @@
-package com.mygdx.game.characters;
+package com.mygdx.game.characters.AI;
 
-import com.mygdx.game.core.NodeHolder;
+import com.mygdx.game.characters.GameCharacter;
 
 /**
  * Created by al on 5/10/2016.

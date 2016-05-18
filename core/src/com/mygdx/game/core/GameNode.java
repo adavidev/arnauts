@@ -1,10 +1,6 @@
 package com.mygdx.game.core;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.characters.State;
-
-import java.util.ArrayList;
+import com.mygdx.game.characters.State.State;
 
 /**
  * Created by Alan on 3/28/2016.

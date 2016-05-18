@@ -58,6 +58,7 @@ public class Ship extends NodeHolder {
 
     public void addInteractable(Interactable interactable, int x, int y){
         nodes.add(interactable);
+        interactables.add(interactable);
         interactable.parent(this);
         interactable.setPos(x,y);
 

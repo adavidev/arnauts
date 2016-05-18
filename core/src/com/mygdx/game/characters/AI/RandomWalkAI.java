@@ -1,13 +1,10 @@
-package com.mygdx.game.characters;
+package com.mygdx.game.characters.AI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.characters.GameCharacter;
+import com.mygdx.game.characters.State.Stand;
 import com.mygdx.game.core.ARandom;
-import com.mygdx.game.core.Astar;
-import com.mygdx.game.core.NodeHolder;
-import com.mygdx.game.ship.Ship;
-import com.mygdx.game.ship.Tile;
-import com.mygdx.game.ship.TileType;
 
 import java.util.ArrayList;
 
