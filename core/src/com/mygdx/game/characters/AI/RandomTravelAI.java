@@ -81,9 +81,9 @@ public class RandomTravelAI extends AI {
         Vector3 rpos = new Vector3(target);
         Vector3 npos = new Vector3(node.basicCenter());
         if (rpos.y > npos.y + 1){
-            node.state.climbDown();
-        } else if(rpos.y < npos.y - 1) {
             node.state.climbUp();
+        } else if(rpos.y < npos.y - 1) {
+            node.state.climbDown();
         }else
         {
             node.state.stand();

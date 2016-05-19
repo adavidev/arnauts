@@ -37,6 +37,10 @@ public class Ship extends NodeHolder {
         tile.check(this);
     }
 
+    public Tile getFromGlobal(){
+        return null;
+    }
+
     public Tile get(Vector3 pos) {
         return get(((int) pos.x / 25), ((int) pos.y / 50));
     }

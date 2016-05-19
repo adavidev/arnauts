@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Scene extends NodeHolder {
 
     public static Scene currentScene = null;
+    public ArrayList<UI> uis = new ArrayList<UI>();
 
     public Scene(){
         super();

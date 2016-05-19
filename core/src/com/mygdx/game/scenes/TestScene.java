@@ -2,6 +2,7 @@ package com.mygdx.game.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.characters.Captain;
 import com.mygdx.game.characters.Engineer;
 import com.mygdx.game.characters.Hunter;
@@ -46,6 +47,11 @@ public class TestScene extends Scene{
                     }
                     if ( Gdx.input.isKeyPressed(Input.Keys.Q)){
                         node.rot--;
+                    }
+
+                    if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+//                        System.out.println(((Ship)node).get(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0)));
+                        System.out.println("X:" + Gdx.input.getX() + " Y:" + Gdx.input.getY());
                     }
                 }
 

@@ -32,7 +32,7 @@ public class ClimbingDown extends State {
 
     @Override
     public void climbDown() {
-        Vector3 sub = new Vector3(0,.3f,0);
+        Vector3 sub = new Vector3(0,-.3f,0);
         sub.rotate(NodeHolder.rotAxis,character.globalRot);
         character.pos.add(sub);
     }
