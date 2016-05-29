@@ -5,6 +5,11 @@ package com.mygdx.game.ship;
  */
 public class CleanCorridor extends Tile {
     public CleanCorridor(){
+        this(null);
+    }
+
+    public CleanCorridor(Ship ship) {
+        super(ship);
         CleanCorridorRenderObject ro = new CleanCorridorRenderObject(this);
         type = TileType.Walkable;
     }

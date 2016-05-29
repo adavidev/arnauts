@@ -5,6 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.GameCam;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,12 +19,17 @@ import java.util.Collections;
 public class RenderManager {
     public static SpriteBatch batch = null;
     public static ArrayList<RenderObject> sprites = new ArrayList<RenderObject>();
-    public OrthographicCamera cam;
+    public ShapeRenderer shapeDebugger;
+    public GameCam cam;
+
+    public RenderManager(GameCam cam){
+        this.cam = cam;
+        shapeDebugger=new ShapeRenderer();
+    }
 
     public void load(SpriteBatch batch){
         this.batch = batch;
-        cam = new OrthographicCamera(640/2
-                ,480/2);
+
         cam.position.set(0,0,0);
         cam.update();
     }
@@ -44,7 +53,18 @@ public class RenderManager {
         Gdx.gl.glClearColor(.2f, .2f, .2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        Gdx.gl.glLineWidth(2);
+        shapeDebugger.setProjectionMatrix(cam.combined);
+        shapeDebugger.begin(ShapeRenderer.ShapeType.Line);
+        shapeDebugger.setColor(1, 1, 1, 1);
+        for (Vector3 click : cam.clicks){
+            shapeDebugger.line(click.x, click.y,0, 0);
+        }
+        shapeDebugger.end();
+
         batch.begin();
+//        Gdx.gl10.glLineWidth(10);
+
 
         for (RenderObject sprite : sprites){
             sprite.draw(batch);

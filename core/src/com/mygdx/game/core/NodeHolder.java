@@ -1,6 +1,7 @@
 package com.mygdx.game.core;
 
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.ship.Tile;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ public abstract class NodeHolder {
     public Vector3 center = Vector3.Zero;
     public float width = 10;
     public float height = 10;
+    private ArrayList<NodeHolder> toAdd;
 
     public NodeHolder(NodeHolder holder) {
         if (holder != null)
@@ -33,6 +35,7 @@ public abstract class NodeHolder {
 
         lastPos = new Vector3(this.pos);
         lastRot=0;
+        toAdd = new ArrayList<NodeHolder>();
     }
 
     public NodeHolder() {
@@ -89,6 +92,11 @@ public abstract class NodeHolder {
         pos.rotate(NodeHolder.rotAxis, -lastRot);
         pos.rotate(NodeHolder.rotAxis, globalRot);
 
+        for (NodeHolder node : toAdd){
+            nodes.add(node);
+        }
+        toAdd.clear();
+
         for(NodeHolder node : nodes){
             node.render();
         }
@@ -103,6 +111,11 @@ public abstract class NodeHolder {
         }
 
         return total;
+    }
+
+
+    public void addNode(NodeHolder node) {
+        toAdd.add(node);
     }
 
     public Vector3 basicPos(){

@@ -60,7 +60,7 @@ public class RandomTravelAI extends AI {
     }
 
     public void waitRandom(){
-        System.out.println("Available: " + new Astar(node).available());
+//        System.out.println("Available: " + new Astar(node).available());
 //        System.out.println("Tile Position: " + node.currentTile().getCenter());
 
         checkTime = ARandom.rand((int) System.currentTimeMillis(), 4) + 3;

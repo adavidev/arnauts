@@ -16,10 +16,12 @@ import java.util.ArrayList;
 public class Ship extends NodeHolder {
     public TDArray<Tile> shipTiles;
     private ArrayList<Interactable> interactables;
+    private ArrayList<Interactable> interactAdd;
 
     public Ship() {
         super();
         interactables = new ArrayList<Interactable>();
+        interactAdd = new ArrayList<Interactable>();
         shipTiles = new TDArray<Tile>();
     }
 
@@ -28,11 +30,29 @@ public class Ship extends NodeHolder {
 
     }
 
+    @Override
+    public void render(){
+        for (Interactable node : interactAdd){
+            interactables.add(node);
+        }
+        interactAdd.clear();
+
+        super.render();
+    }
+
+    public void addGlobal(Tile tile, Vector3 position){
+        Vector3 normalized = new Vector3(position).sub(this.globalPos).rotate(NodeHolder.rotAxis, -this.globalRot);
+        System.out.println("Trying: " + normalized);
+        this.addTile(tile, ((int) normalized.x / 25), ((int) normalized.y / 50));
+    }
+
     public void addTile(Tile tile, int x, int y){
         shipTiles.addToInnerArray(x,y,tile);
-        nodes.add(tile);
+
         tile.parent(this);
         tile.setPos(x,y);
+
+        addNode(tile);
 
         tile.check(this);
     }
@@ -43,6 +63,14 @@ public class Ship extends NodeHolder {
 
     public Tile get(Vector3 pos) {
         return get(((int) pos.x / 25), ((int) pos.y / 50));
+    }
+
+    public Tile getGlobal(Vector3 globalPos) {
+        Vector3 normalized = new Vector3(globalPos).sub(this.globalPos).rotate(NodeHolder.rotAxis, -this.globalRot);
+//        System.out.println("Trying: " + globalPos);
+//        System.out.println("Tile at: " + this.get(normalized));
+
+        return this.get(normalized);
     }
 
     public Tile get(int x, int y){
@@ -61,10 +89,12 @@ public class Ship extends NodeHolder {
     }
 
     public void addInteractable(Interactable interactable, int x, int y){
-        nodes.add(interactable);
-        interactables.add(interactable);
+//        nodes.add(interactable);
         interactable.parent(this);
         interactable.setPos(x,y);
+
+        addToInteracables(interactable);
+        addNode(interactable);
 
         interactable.check(this);
     }
@@ -83,6 +113,16 @@ public class Ship extends NodeHolder {
         }
 
         return interactable;
+    }
+
+    public void addGlobalInteractable(Ladder ladder, Vector3 position) {
+        Vector3 normalized = new Vector3(position).sub(this.globalPos).rotate(NodeHolder.rotAxis, -this.globalRot);
+        System.out.println("Trying: " + normalized);
+        this.addInteractable(ladder, ((int) normalized.x / 25), ((int) normalized.y / 50));
+    }
+
+    public void addToInteracables(Interactable node) {
+        interactAdd.add(node);
     }
 
 }
