@@ -21,30 +21,24 @@ public class HullRenderObject {
 
     public class Hull extends RenderObject {
 
-        private Texture hullb, hullempty, hulll, hullr, hullt, hullbl, hullbr, hulltl, hulltr;
+        private final Texture hull;
+        private Texture hullempty;
         private TextureRegion trhullb, trhullempty, trhulll, trhullr, trhullt, trhullbl, trhullbr, trhulltl, trhulltr;
 
         public Hull(GameNode node) {
-            super(node, "hullB.png");
-            hullb = new Texture("hullB.png");
+            super(node, "simple/hull.png");
+            hull = new Texture("simple/hull.png");
             hullempty = new Texture("hullEmpty.png");
-            hulll = new Texture("hullL.png");
-            hullr = new Texture("hullR.png");
-            hullt = new Texture("hullT.png");
-            hullbl = new Texture("hullBL.png");
-            hullbr = new Texture("hullBR.png");
-            hulltl = new Texture("hullTL.png");
-            hulltr = new Texture("hullTR.png");
 
-            trhullb = new TextureRegion(hullb);
+            trhullb = new TextureRegion(hull, 125,0,25,50);
             trhullempty = new TextureRegion(hullempty);
-            trhulll = new TextureRegion(hulll);
-            trhullr = new TextureRegion(hullr);
-            trhullt = new TextureRegion(hullt);
-            trhullbl = new TextureRegion(hullbl);
-            trhullbr = new TextureRegion(hullbr);
-            trhulltl = new TextureRegion(hulltl);
-            trhulltr = new TextureRegion(hulltr);
+            trhulll = new TextureRegion(hull, 100,0,25,50);
+            trhullr = new TextureRegion(hull, 75,0,25,50);
+            trhullt = new TextureRegion(hull, 0,0,25,50);
+            trhullbl = new TextureRegion(hull, 175,0,25,50);
+            trhullbr = new TextureRegion(hull, 150,0,25,50);
+            trhulltl = new TextureRegion(hull, 50,0,25,50);
+            trhulltr = new TextureRegion(hull, 25,0,25,50);
         }
 
         @Override

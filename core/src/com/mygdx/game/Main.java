@@ -17,7 +17,7 @@ public class Main extends ApplicationAdapter {
 		scene = new TestScene();
         scene.set();
 
-		cam = new GameCam(640/2,480/2);
+		cam = new GameCam(800/2,600/2);
 
 		rman = new RenderManager(cam);
 		rman.load(new SpriteBatch());

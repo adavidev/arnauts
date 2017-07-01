@@ -21,6 +21,8 @@ public abstract class CharacterRenderObject extends RenderObject {
     float stateTime;
 
     Texture walk,standTex;
+    public float size = 45;
+
     public CharacterRenderObject(GameNode node, String spriteSheet) {
         super(node, spriteSheet);
     }
@@ -54,6 +56,6 @@ public abstract class CharacterRenderObject extends RenderObject {
         stateTime += Gdx.graphics.getDeltaTime();
 //        batch.draw(play.getKeyFrame(stateTime, true), 0,0);
 //        batch.draw(play.getKeyFrame(stateTime, true),0, 0, 45, 45);
-        batch.draw(play.getKeyFrame(stateTime, true), myNode.globalPos.x,myNode.globalPos.y, 0,0,40,40,1,1,myNode.globalRot);
+        batch.draw(play.getKeyFrame(stateTime, true), myNode.globalPos.x,myNode.globalPos.y, 0,0,size,size,1,1,myNode.globalRot);
     }
 }

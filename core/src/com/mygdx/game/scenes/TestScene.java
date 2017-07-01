@@ -99,6 +99,8 @@ public class TestScene extends Scene{
         ship.addTile(new Hull(ship), 1, 2);
         ship.addTile(new Hull(ship), 7, 2);
         ship.addTile(new Hull(ship), 2, 3);
+        ship.addTile(new Hull(ship), 3, 3);
+        ship.addTile(new Hull(ship), 4, 3);
         ship.addTile(new Hull(ship), 8, 1);
         ship.addTile(new Hull(ship), 4, 1);
 

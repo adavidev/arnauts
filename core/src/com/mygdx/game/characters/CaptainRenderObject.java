@@ -17,20 +17,21 @@ public class CaptainRenderObject extends CharacterRenderObject {
     public CaptainRenderObject(GameNode node) {
         super(node, "EngiDude.png");
 
-        walk = new Texture("Captwalk1.png");
-        standTex= new Texture("Captstand1.png");
+        int wi = 52;
+        int ht = 50;
+
+        int slow = 0;
+        int shigh = 13;
+        int wlow = 14;
+        int whigh = 29;
+
+        walk = new Texture("capt_all_anims.png");
+        standTex = walk;
+
         runTrs = new Array<TextureRegion>();
-        runTrs.add(new TextureRegion(walk, 0,0,50,50));
-        runTrs.add(new TextureRegion(walk, 50,0,50,50));
-        runTrs.add(new TextureRegion(walk, 100,0,50,50));
-        runTrs.add(new TextureRegion(walk, 150,0,50,50));
-        runTrs.add(new TextureRegion(walk, 200,0,50,50));
-        runTrs.add(new TextureRegion(walk, 250,0,50,50));
-        runTrs.add(new TextureRegion(walk, 300,0,50,50));
-        runTrs.add(new TextureRegion(walk, 350,0,50,50));
-        runTrs.add(new TextureRegion(walk, 400,0,50,50));
-        runTrs.add(new TextureRegion(walk, 450,0,50,50));
-        runTrs.add(new TextureRegion(walk, 500,0,50,50));
+        for (int i = wlow; i <= whigh; i++) {
+            runTrs.add(new TextureRegion(walk, 50 * i,0,50,51));
+        }
 
         tr = new TextureRegion(this, 0,0,50,50);
         right = new Animation(0.1f, runTrs, Animation.PlayMode.LOOP);
@@ -47,11 +48,10 @@ public class CaptainRenderObject extends CharacterRenderObject {
         left = new Animation(0.1f, leftTrs, Animation.PlayMode.LOOP);
 
         standreg = new Array<TextureRegion>();
-        standreg.add(new TextureRegion(standTex, 0,0,50,50));
-        standreg.add(new TextureRegion(standTex, 50,0,50,50));
-        standreg.add(new TextureRegion(standTex, 100,0,50,50));
-        standreg.add(new TextureRegion(standTex, 150,0,50,50));
-        standreg.add(new TextureRegion(standTex, 200,0,50,50));
+        for (int i = slow; i <= shigh; i++) {
+            standreg.add(new TextureRegion(standTex, 50 * i,0,50,51));
+        }
+
         stand = new Animation(0.1f, standreg, Animation.PlayMode.LOOP);
     }
 }

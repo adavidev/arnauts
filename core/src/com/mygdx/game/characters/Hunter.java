@@ -16,7 +16,7 @@ public class Hunter extends GameCharacter {
         RenderObject ro = new HunterRenderObject(this);
         center = new Vector3(20,20,0);
         state = new Stand(this);
-        walkSpeed = .7f;
+        walkSpeed = .3f;
         ai = new RandomTravelAI(this);
         super.load();
     }
