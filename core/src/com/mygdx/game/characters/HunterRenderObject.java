@@ -13,7 +13,7 @@ public class HunterRenderObject extends CharacterRenderObject {
     public HunterRenderObject(GameNode node) {
         super(node, "EngiDude.png");
 
-        walk = new Texture("scrapper-full-color.png");
+        walk = new Texture("hunter-running1.png");
         standTex= new Texture("hunter-stand1.png");
         runTrs = new Array<TextureRegion>();
         runTrs.add(new TextureRegion(walk, 0,0,50,50));
@@ -26,7 +26,7 @@ public class HunterRenderObject extends CharacterRenderObject {
         runTrs.add(new TextureRegion(walk, 350,0,50,50));
 
         tr = new TextureRegion(this, 0,0,50,50);
-        right = new Animation(0.15f, runTrs, Animation.PlayMode.LOOP);
+        right = new Animation(anim_speed, runTrs, Animation.PlayMode.LOOP);
         stateTime = 0;
 
         Array<TextureRegion> leftTrs = new Array<TextureRegion>();
@@ -37,11 +37,11 @@ public class HunterRenderObject extends CharacterRenderObject {
         for (TextureRegion t : leftTrs){
             t.flip(true, false);
         }
-        left = new Animation(0.15f, leftTrs, Animation.PlayMode.LOOP);
+        left = new Animation(anim_speed, leftTrs, Animation.PlayMode.LOOP);
 
         standreg = new Array<TextureRegion>();
         standreg.add(new TextureRegion(standTex, 0,0,50,50));
-        stand = new Animation(0.1f, standreg, Animation.PlayMode.LOOP);
+        stand = new Animation(anim_speed, standreg, Animation.PlayMode.LOOP);
     }
 
 

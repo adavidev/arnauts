@@ -34,7 +34,7 @@ public class CaptainRenderObject extends CharacterRenderObject {
         }
 
         tr = new TextureRegion(this, 0,0,50,50);
-        right = new Animation(0.1f, runTrs, Animation.PlayMode.LOOP);
+        right = new Animation(anim_speed, runTrs, Animation.PlayMode.LOOP);
         stateTime = 0;
 
         Array<TextureRegion> leftTrs = new Array<TextureRegion>();
@@ -45,13 +45,13 @@ public class CaptainRenderObject extends CharacterRenderObject {
         for (TextureRegion t : leftTrs){
             t.flip(true, false);
         }
-        left = new Animation(0.1f, leftTrs, Animation.PlayMode.LOOP);
+        left = new Animation(anim_speed, leftTrs, Animation.PlayMode.LOOP);
 
         standreg = new Array<TextureRegion>();
         for (int i = slow; i <= shigh; i++) {
             standreg.add(new TextureRegion(standTex, 50 * i,0,50,51));
         }
 
-        stand = new Animation(0.1f, standreg, Animation.PlayMode.LOOP);
+        stand = new Animation(anim_speed, standreg, Animation.PlayMode.LOOP);
     }
 }

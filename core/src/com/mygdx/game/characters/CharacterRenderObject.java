@@ -20,6 +20,8 @@ public abstract class CharacterRenderObject extends RenderObject {
     Animation right, left, stand, wleft, wright;
     float stateTime;
 
+    float anim_speed = 0.1f;
+
     Texture walk,standTex;
     public float size = 45;
 
