@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene';
 import { HudScene } from './scenes/HudScene';
+import { MenuScene } from './scenes/MenuScene';
+import { OptionsScene } from './scenes/OptionsScene';
 import { TestScene } from './scenes/TestScene';
 
 const config: Phaser.Types.Core.GameConfig = {
@@ -10,7 +12,7 @@ const config: Phaser.Types.Core.GameConfig = {
   height: 600,
   backgroundColor: '#333333',
   pixelArt: true,
-  scene: [BootScene, TestScene, HudScene],
+  scene: [BootScene, MenuScene, OptionsScene, TestScene, HudScene],
   scale: {
     mode: Phaser.Scale.NONE,
   },

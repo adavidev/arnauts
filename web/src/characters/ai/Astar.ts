@@ -50,7 +50,14 @@ export class Astar {
 
   private build(searchList: ANode[]): ANode[] {
     for (let iter = 0; iter < MAX_BUILD_ITERATIONS; iter++) {
-      if (this.character.currentTile()?.type !== TileType.Walkable) return searchList;
+      const start = this.character.currentTile();
+      if (
+        start &&
+        !start.isType(TileType.Walkable) &&
+        !start.isType(TileType.Climbable)
+      ) {
+        return searchList;
+      }
 
       const toAdd: ANode[] = [];
       for (const tile of searchList) {

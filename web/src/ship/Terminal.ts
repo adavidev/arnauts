@@ -7,7 +7,7 @@ export class Terminal extends Interactable {
 
   constructor(scene: Phaser.Scene) {
     super(scene);
-    this.type = TileType.None;
+    this.type = TileType.Walkable;
 
     const sprite = scene.make.image({ x: 0, y: 0, key: 'terminal' }).setOrigin(0, 0);
     this.add(sprite);

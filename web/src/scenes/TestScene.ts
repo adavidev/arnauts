@@ -11,21 +11,38 @@ import { Captain } from '../characters/Captain';
 import { Hunter } from '../characters/Hunter';
 import { Layer } from '../core/Layers';
 import { GAME_HEIGHT, GAME_WIDTH, HOTBAR_HEIGHT, type PlaceableComponent } from './HudScene';
-interface SceneKeys {
-  Q: Phaser.Input.Keyboard.Key;
-  E: Phaser.Input.Keyboard.Key;
-  T: Phaser.Input.Keyboard.Key;
-  I: Phaser.Input.Keyboard.Key;
-}
+import { CameraRig } from '../camera/CameraRig';
+import { loadInputBindings } from '../persistence/inputSettingsStore';
+import { mergeWithDefaults } from '../input/keyBindings';
+import {
+  anyKeysDown,
+  registerInputBindings,
+  type RegisteredInputKeys,
+} from '../input/registerBindings';
+import {
+  enabledRuleIdsFromPreset,
+  mergeRulePresetsWithDefaults,
+} from '../placement/rulePresets';
+import {
+  loadPlacementRulePresets,
+  savePlacementRulePresets,
+} from '../persistence/placementRulePresetsStore';
+import { TileToolsPanel } from '../ui/TileToolsPanel';
 
 const CAMERA_PAN_SPEED = 3;
 
 export class TestScene extends Phaser.Scene {
   private readonly authoringStore = new SessionStore();
   private placement!: PlacementCoordinator;
+  /** Mutable rule preset map for SQLite + placement filtering. */
+  private readonly presetRef = { current: mergeRulePresetsWithDefaults({}) };
+  private readonly neighborRef = { current: false };
+  private tileToolsPanel!: TileToolsPanel;
+  private escKey!: Phaser.Input.Keyboard.Key;
+  private panelToggleKey!: Phaser.Input.Keyboard.Key;
   private ship!: Ship;
-  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-  private keys!: SceneKeys;
+  private cameraRig!: CameraRig;
+  private boundKeys!: RegisteredInputKeys;
   private shiftKey!: Phaser.Input.Keyboard.Key;
   private topologyDebugOn = false;
   private ringCorner: { x: number; y: number } | null = null;
@@ -57,7 +74,12 @@ export class TestScene extends Phaser.Scene {
     this.ship.addInteractable(new Ladder(this), 3, 1);
     this.ship.addInteractable(new Ladder(this), 3, 2);
 
-    this.placement = new PlacementCoordinator(this, this.ship, this.authoringStore);
+    this.placement = new PlacementCoordinator(
+      this,
+      this.ship,
+      this.authoringStore,
+      (_tool) => enabledRuleIdsFromPreset(this.presetRef.current.global),
+    );
     void this.authoringStore.replaceSnapshotFromShip(this.ship);
 
     const hunter = new Hunter(this);
@@ -72,16 +94,54 @@ export class TestScene extends Phaser.Scene {
 
     const kb = this.input.keyboard;
     if (!kb) throw new Error('keyboard not available');
-    this.cursors = kb.createCursorKeys();
-    this.keys = kb.addKeys('Q,E,T,I') as SceneKeys;
     this.shiftKey = kb.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+    this.escKey = kb.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.panelToggleKey = kb.addKey(Phaser.Input.Keyboard.KeyCodes.BACKTICK);
+
+    this.cameraRig = new CameraRig(this, this.cameras.main, CAMERA_PAN_SPEED);
+
+    this.boundKeys = registerInputBindings(kb, mergeWithDefaults({}));
+    void loadInputBindings().then((bindings) => {
+      const keyboard = this.input.keyboard;
+      if (!keyboard) return;
+      this.boundKeys = registerInputBindings(keyboard, bindings);
+    });
+
+    this.tileToolsPanel = new TileToolsPanel(this, {
+      getShip: () => this.ship,
+      presetRef: this.presetRef,
+      getTool: () => this.registry.get('selectedComponent') as PlaceableComponent | null,
+      getRingCorner: () => this.ringCorner,
+      shiftSeal: () => this.shiftKey.isDown,
+      onSavePresets: async () => {
+        await savePlacementRulePresets(this.presetRef.current);
+      },
+      importFile: async (file: File) => {
+        await this.importAuthoringFile(file);
+      },
+      exportSqlite: async () => {
+        await this.downloadAuthoringSqlite();
+      },
+      exportJson: async () => {
+        await this.downloadAuthoringJson();
+      },
+      neighborRef: this.neighborRef,
+    });
+    this.tileToolsPanel.layoutRight(GAME_WIDTH);
+    this.tileToolsPanel.refreshToolLabel();
 
     this.registry.events.on(
       'changedata-selectedComponent',
       (_parent: unknown, _key: string, value: PlaceableComponent | null) => {
         if (value !== 'ring') this.ringCorner = null;
+        this.tileToolsPanel.refreshToolLabel();
       },
     );
+
+    void loadPlacementRulePresets().then((p) => {
+      this.presetRef.current = p;
+      this.tileToolsPanel.refreshRuleBoxes();
+    });
 
     this.toggleTopologyDebug(false);
 
@@ -94,6 +154,16 @@ export class TestScene extends Phaser.Scene {
     this.registry.events.on('authoring-import-file', (file: File) =>
       void this.importAuthoringFile(file),
     );
+
+    this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
+      if (pointer.y >= GAME_HEIGHT - HOTBAR_HEIGHT) {
+        this.ship.setHoveredTile(null, null);
+      } else {
+        const tile = this.ship.worldToTile(pointer.worldX, pointer.worldY);
+        this.ship.setHoveredTile(tile.x, tile.y);
+      }
+      this.tileToolsPanel.updateProbe(pointer.y, pointer.worldX, pointer.worldY);
+    });
 
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       if (!pointer.leftButtonDown()) return;
@@ -181,20 +251,38 @@ export class TestScene extends Phaser.Scene {
   }
 
   update(time: number, deltaMs: number): void {
-    const cam = this.cameras.main;
-    if (this.cursors.left?.isDown) cam.scrollX -= CAMERA_PAN_SPEED;
-    if (this.cursors.right?.isDown) cam.scrollX += CAMERA_PAN_SPEED;
-    if (this.cursors.up?.isDown) cam.scrollY -= CAMERA_PAN_SPEED;
-    if (this.cursors.down?.isDown) cam.scrollY += CAMERA_PAN_SPEED;
+    if (Phaser.Input.Keyboard.JustDown(this.panelToggleKey)) {
+      this.tileToolsPanel.setVisible(!this.tileToolsPanel.getVisible());
+    }
 
-    if (this.keys.E.isDown) this.ship.angle += 1;
-    if (this.keys.Q.isDown) this.ship.angle -= 1;
+    if (Phaser.Input.Keyboard.JustDown(this.escKey)) {
+      if (this.tileToolsPanel.getVisible()) {
+        this.tileToolsPanel.setVisible(false);
+      } else {
+        this.scene.stop('HudScene');
+        this.scene.start('MenuScene');
+      }
+    }
 
-    if (Phaser.Input.Keyboard.JustDown(this.keys.T)) {
+    const bk = this.boundKeys;
+    this.cameraRig.updatePanAxes({
+      left: bk.cameraPanLeft,
+      right: bk.cameraPanRight,
+      up: bk.cameraPanUp,
+      down: bk.cameraPanDown,
+    });
+
+    if (anyKeysDown(bk.rotateShipRight)) this.ship.angle += 1;
+    if (anyKeysDown(bk.rotateShipLeft)) this.ship.angle -= 1;
+
+    if (bk.toggleTopologyDebug.some((k) => Phaser.Input.Keyboard.JustDown(k))) {
       this.toggleTopologyDebug(!this.topologyDebugOn);
     }
 
-    if (this.shiftKey.isDown && Phaser.Input.Keyboard.JustDown(this.keys.I)) {
+    if (
+      this.shiftKey.isDown &&
+      bk.stripInteriorHull.some((k) => Phaser.Input.Keyboard.JustDown(k))
+    ) {
       const n = this.ship.stripInteriorHullToCorridor(this);
       if (n > 0) this.updateInteriorHullWarning();
     }

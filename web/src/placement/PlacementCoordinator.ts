@@ -4,15 +4,19 @@ import { Hull } from '../ship/Hull';
 import { Ladder } from '../ship/Ladder';
 import { Terminal } from '../ship/Terminal';
 import type { SessionStore } from '../persistence/sessionStore';
-import { allRulesPassed, runPlacementRules } from './rules/registry';
+import { evaluatePlacementRules } from './rules/registry';
+import type { PlacementToolKind } from './placementTools';
 import type { PlacementIntent } from './types';
 import type { RuleContext } from './types';
+
+export type GetEnabledRuleIds = (tool: PlacementToolKind) => Set<string>;
 
 export class PlacementCoordinator {
   constructor(
     private readonly scene: Phaser.Scene,
     private readonly ship: Ship,
     private readonly sessions: SessionStore,
+    private readonly getEnabledRuleIds: GetEnabledRuleIds,
   ) {}
 
   async tryPlaceHull(tileX: number, tileY: number): Promise<boolean> {
@@ -20,8 +24,8 @@ export class PlacementCoordinator {
     const snapshot = this.ship.getTileTypeSnapshot();
     const intent: PlacementIntent = { kind: 'place_hull' };
     const ctx: RuleContext = { snapshot, x: tileX, y: tileY, tileAt, intent };
-    const ruleResults = runPlacementRules(ctx);
-    const ok = allRulesPassed(ruleResults);
+    const enabled = this.getEnabledRuleIds('hull');
+    const { ruleResults, ok } = evaluatePlacementRules(ctx, enabled);
     await this.sessions.appendPlacementEvent({
       actionKind: 'place_hull',
       payload: { x: tileX, y: tileY },
@@ -40,8 +44,8 @@ export class PlacementCoordinator {
     const snapshot = this.ship.getTileTypeSnapshot();
     const intent: PlacementIntent = { kind: 'place_ladder' };
     const ctx: RuleContext = { snapshot, x: tileX, y: tileY, tileAt, intent };
-    const ruleResults = runPlacementRules(ctx);
-    const ok = allRulesPassed(ruleResults);
+    const enabled = this.getEnabledRuleIds('ladder');
+    const { ruleResults, ok } = evaluatePlacementRules(ctx, enabled);
     await this.sessions.appendPlacementEvent({
       actionKind: 'place_ladder',
       payload: { x: tileX, y: tileY },
@@ -59,8 +63,8 @@ export class PlacementCoordinator {
     const snapshot = this.ship.getTileTypeSnapshot();
     const intent: PlacementIntent = { kind: 'place_terminal' };
     const ctx: RuleContext = { snapshot, x: tileX, y: tileY, tileAt, intent };
-    const ruleResults = runPlacementRules(ctx);
-    const ok = allRulesPassed(ruleResults);
+    const enabled = this.getEnabledRuleIds('terminal');
+    const { ruleResults, ok } = evaluatePlacementRules(ctx, enabled);
     await this.sessions.appendPlacementEvent({
       actionKind: 'place_terminal',
       payload: { x: tileX, y: tileY },
@@ -96,8 +100,8 @@ export class PlacementCoordinator {
       tileAt: this.ship.getTile(bx, by),
       intent,
     };
-    const ruleResults = runPlacementRules(ctx);
-    const ok = allRulesPassed(ruleResults);
+    const enabled = this.getEnabledRuleIds('ring');
+    const { ruleResults, ok } = evaluatePlacementRules(ctx, enabled);
     await this.sessions.appendPlacementEvent({
       actionKind: 'place_ring',
       payload: { ax, ay, bx, by, sealOverWalkable },

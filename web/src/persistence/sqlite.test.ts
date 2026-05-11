@@ -58,5 +58,6 @@ describe('sql.js persistence', () => {
     expect(names).toContain('tiles');
     expect(names).toContain('placement_events');
     expect(names).toContain('sessions');
+    expect(names).toContain('user_settings');
   });
 });

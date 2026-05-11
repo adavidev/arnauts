@@ -1,6 +1,6 @@
 import initSqlJs from 'sql.js';
 import type { Database, SqlJsStatic } from 'sql.js';
-import { MIGRATION_V1, SCHEMA_VERSION } from './schema';
+import { MIGRATION_V1, MIGRATION_V2, SCHEMA_VERSION } from './schema';
 
 import sqlWasmUrl from 'sql.js/dist/sql-wasm.wasm?url';
 
@@ -46,6 +46,13 @@ export function runMigrations(db: Database): void {
       String(SCHEMA_VERSION),
     ]);
     db.run('PRAGMA user_version = 1');
+  }
+  if (v < 2) {
+    db.run(MIGRATION_V2);
+    db.run(`INSERT OR REPLACE INTO meta (key, value) VALUES ('schema_version', ?)`, [
+      String(SCHEMA_VERSION),
+    ]);
+    db.run('PRAGMA user_version = 2');
   }
 }
 

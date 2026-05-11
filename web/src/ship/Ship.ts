@@ -76,6 +76,11 @@ export class Ship extends GameNode {
   private shipForegroundLayer: ShipLayer;
   /** Single stroke around the union of walkable tiles (not a per-cell grid). */
   private walkableOutlineGfx: Phaser.GameObjects.Graphics;
+  /** Build-mode cell highlight under the pointer. */
+  private tileHoverGfx: Phaser.GameObjects.Graphics;
+  /** Optional 8-neighbor tint for rule debugging. */
+  private neighborHighlightGfx: Phaser.GameObjects.Graphics;
+  private hoverTile: { x: number; y: number } | null = null;
   /** Build-mode overlay: exterior vs interior hull (lazy). */
   private topologyDebugGfx: Phaser.GameObjects.Graphics | null = null;
   private topologyDebugEnabled = false;
@@ -88,14 +93,57 @@ export class Ship extends GameNode {
     this.characterLayer = new ShipLayer(scene);
     this.shipForegroundLayer = new ShipLayer(scene);
     this.walkableOutlineGfx = scene.add.graphics();
+    this.tileHoverGfx = scene.add.graphics();
+    this.neighborHighlightGfx = scene.add.graphics();
     this.add([
       this.tileHullLayer,
       this.tileDeckLayer,
       this.walkableOutlineGfx,
+      this.tileHoverGfx,
+      this.neighborHighlightGfx,
       this.shipEquipmentLayer,
       this.characterLayer,
       this.shipForegroundLayer,
     ]);
+  }
+
+  /**
+   * Highlights one deck cell in ship space for hover feedback (build mode).
+   * Pass null to clear.
+   */
+  public setHoveredTile(tileX: number | null, tileY: number | null): void {
+    if (tileX === null || tileY === null) {
+      this.hoverTile = null;
+      this.tileHoverGfx.clear();
+      return;
+    }
+    if (this.hoverTile?.x === tileX && this.hoverTile?.y === tileY) return;
+    this.hoverTile = { x: tileX, y: tileY };
+    const g = this.tileHoverGfx;
+    g.clear();
+    const pxL = tileX * TILE_W;
+    const pyTop = -tileY * TILE_H;
+    g.fillStyle(0x88ccff, 0.28);
+    g.fillRect(pxL, pyTop, TILE_W, TILE_H);
+  }
+
+  /**
+   * When enabled, faint tint on the eight neighbors of (tileX, tileY) for adjacency debugging.
+   */
+  public setNeighborHighlight(
+    tileX: number | null,
+    tileY: number | null,
+    enabled: boolean,
+  ): void {
+    const g = this.neighborHighlightGfx;
+    g.clear();
+    if (!enabled || tileX === null || tileY === null) return;
+    for (const [dx, dy] of EIGHT_NEIGHBOR_OFFSETS) {
+      const px = (tileX + dx) * TILE_W;
+      const py = -(tileY + dy) * TILE_H;
+      g.fillStyle(0xffaa44, 0.18);
+      g.fillRect(px, py, TILE_W, TILE_H);
+    }
   }
 
   private static key(x: number, y: number): string {

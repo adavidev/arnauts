@@ -49,12 +49,21 @@ export class HudScene extends Phaser.Scene {
     super('HudScene');
   }
 
+  /**
+   * Keep overlay UI pinned to the viewport. Camera pan/zoom only affects TestScene;
+   * without this, scrollFactor‑1 hotbar tiles slide when the main scene camera moves.
+   */
+  update(): void {
+    this.cameras.main.setScroll(0, 0);
+  }
+
   create(): void {
     this.registry.set('selectedComponent', null);
 
     this.add
       .rectangle(0, HOTBAR_Y, GAME_WIDTH, HOTBAR_HEIGHT, 0x05070f, 0.94)
       .setOrigin(0, 0)
+      .setScrollFactor(0)
       .setDepth(1000);
 
     const totalWidth = HOTBAR_SLOTS.length * SLOT_SIZE + (HOTBAR_SLOTS.length - 1) * SLOT_GAP;
@@ -118,7 +127,7 @@ export class HudScene extends Phaser.Scene {
   }
 
   private createSlot(slot: HotbarSlot, x: number, y: number): void {
-    const container = this.add.container(x, y).setDepth(1001);
+    const container = this.add.container(x, y).setDepth(1001).setScrollFactor(0);
     const bg = this.add
       .rectangle(0, 0, SLOT_SIZE, SLOT_SIZE, 0x111827, 0.98)
       .setOrigin(0, 0)
@@ -132,12 +141,14 @@ export class HudScene extends Phaser.Scene {
         fontFamily: 'monospace',
         fontSize: '12px',
       })
+      .setScrollFactor(0)
       .setDepth(1002);
 
     if (slot.textureKey !== null) {
       const icon = this.add
         .image(x + SLOT_SIZE / 2, y + 24, slot.textureKey, slot.frame)
         .setDisplaySize(25, 42)
+        .setScrollFactor(0)
         .setDepth(1002);
       container.add(icon);
 
@@ -149,6 +160,7 @@ export class HudScene extends Phaser.Scene {
           fontSize: '10px',
         })
         .setOrigin(0.5, 0.5)
+        .setScrollFactor(0)
         .setDepth(1002);
     }
 

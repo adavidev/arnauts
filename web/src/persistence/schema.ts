@@ -1,5 +1,13 @@
 /** Applied when PRAGMA user_version is below this value. */
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
+
+/** Adds user_settings for keybindings and other prefs (see migration v2). */
+export const MIGRATION_V2 = `
+CREATE TABLE IF NOT EXISTS user_settings (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL
+);
+`;
 
 export const MIGRATION_V1 = `
 CREATE TABLE IF NOT EXISTS meta (

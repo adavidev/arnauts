@@ -55,7 +55,7 @@ export abstract class GameCharacter extends GameNode {
   public at(typeOrTile: TileType | Tile): boolean {
     const t = this.currentTile();
     if (!t) return false;
-    if (typeof typeOrTile === 'string') return t.type === typeOrTile;
+    if (typeof typeOrTile === 'string') return t.isType(typeOrTile);
     return t === typeOrTile;
   }
 
